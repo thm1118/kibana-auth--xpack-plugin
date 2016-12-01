@@ -1,0 +1,19 @@
+{
+  "defaults": {
+    "plugins": [
+      "elasticsearch/license/latest",
+      "elasticsearch/shield/latest"
+    ]
+  },
+  "clusters": {
+    "test": {
+      "branch": "1.x",
+      "config": {
+        "cluster.name": "esjs-shield-test-runner",
+        "node.name": "esjs-shield-test-runner",
+        "script.inline": true,
+        "discovery.zen.ping.multicast.enabled": false
+      }
+    }
+  }
+}

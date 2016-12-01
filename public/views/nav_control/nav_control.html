@@ -1,0 +1,15 @@
+<div ng-controller="securityNavController" ng-show="!!user">
+  <global-nav-link
+    kbn-route="route"
+    icon="'plugins/security/images/person.svg'"
+    tooltip-content="formatTooltip(user.full_name || user.username)"
+    title="user.full_name || user.username"
+  ></global-nav-link>
+
+  <global-nav-link
+    kbn-route="'/logout'"
+    icon="'plugins/security/images/logout.svg'"
+    tooltip-content="formatTooltip('注销')"
+    title="'注销'"
+  ></global-nav-link>
+</div>

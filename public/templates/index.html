@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12-sm">
+            <div class="well">
+                <h2>{{ title }}</h2>
+                <p class="lead">这就是自定义插件!</p>
+            </div>
+            <p>当前时间： {{ currentTime }}</p>
+        </div>
+    </div>
+
+    <div class="col-12-sm">
+        <div ng-if="error" class="alert alert-danger" role="alert">{{error.message}}</div>
+        <div ng-if="clusterState" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">ES集群状态：演示使用内置es angular 客户端读取es</h3>
+            </div>
+            <div class="panel-body">
+                <pre>{{clusterState | json}}</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12-sm">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">索引列表: 演示自定义nodejs服务端API封装es调用，并访问</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="indexList ">
+                    <li ng-repeat="index in indices">
+                        <a href="#/index/{{index}}">{{ index }}，点击查看详情</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12-sm">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>演示在插件中增加angular的第三方组件</h3>
+            </div>
+            <div class="panel-body">
+                <div id="grid1" ui-grid="{ data: myData }" class="grid"></div>
+            </div>
+        </div>
+    </div>
+</div>

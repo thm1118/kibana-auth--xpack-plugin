@@ -1,0 +1,69 @@
+<kbn-management-app section="elasticsearch">
+  <div class="kbn-management-security container" ng-if="forbidden">
+    You do not have permission to manage users/roles. Please contact your administrator.
+  </div>
+
+  <div class="kbn-management-security container-fluid" ng-if="!forbidden">
+    <div class="row">
+      <div class="col-md-9">
+        <form role="form">
+          <input aria-label="Filter" ng-model="query" class="form-control" type="text" placeholder="Filter..." />
+        </form>
+      </div>
+      <div class="col-md-3">
+        <button ng-click="deleteUsers()" class="btn btn-danger" ng-disabled="!selectedUsers.length">Delete</button>
+        <a href="#/management/elasticsearch/users/edit" ng-click="newUser()" class="btn btn-default">New User</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><input type="checkbox" ng-click="toggleAll()" ng-checked="allSelected()" /></th>
+            <th ng-click="toggleSort(sort, 'full_name')">
+              Full Name
+              <i aria-hidden="true" class="fa" ng-show="sort.orderBy == 'full_name'" ng-class="{'fa-caret-down': sort.reverse, 'fa-caret-up': !sort.reverse}"></i>
+            </th>
+            <th ng-click="toggleSort(sort, 'username')">
+              Username
+              <i aria-hidden="true" class="fa" ng-show="sort.orderBy == 'username'" ng-class="{'fa-caret-down': sort.reverse, 'fa-caret-up': !sort.reverse}"></i>
+            </th>
+            <th ng-click="toggleSort(sort, 'roles')">
+              Roles
+              <i aria-hidden="true" class="fa" ng-show="sort.orderBy == 'roles'" ng-class="{'fa-caret-down': sort.reverse, 'fa-caret-up': !sort.reverse}"></i>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in users | orderBy:'username' | filter:query | orderBy:sort.orderBy:sort.reverse">
+            <td>
+              <input type="checkbox" ng-click="toggle(selectedUsers, user)" ng-checked="includes(selectedUsers, user)"  ng-disabled="user.metadata._reserved" />
+            </td>
+            <td>
+              <a ng-href="#/management/elasticsearch/users/edit/{{user.username}}">{{user.full_name}}</a>
+            </td>
+            <td>
+              <a ng-href="#/management/elasticsearch/users/edit/{{user.username}}">{{user.username}}</a>
+            </td>
+            <td>
+              <span ng-repeat="role in user.roles">
+                <a ng-href="#/management/elasticsearch/roles/edit/{{role}}">{{role}}</a><span ng-if="!$last">,</span>
+              </span>
+            </td>
+            <td>
+              <div ng-if="user.metadata._reserved">
+                <i class="fa fa-question-circle" title="Reserved users are built-in and cannot be removed or modified. Only the password may be changed."></i>
+                Reserved
+              </div>
+            </td>
+          </tr>
+          <tr ng-show="!(users | filter:query).length">
+            <td colspan="5">No <span ng-show="query">matching</span> users found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</kbn-management-app>

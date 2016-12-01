@@ -1,0 +1,71 @@
+<div class="app-container">
+  <kbn-top-nav class="navbar navbar-default navbar-static-top" name="account-nav">
+    <div>
+      <ul class="xpack-breadcrumbs" role="breadcrumbs"></ul>
+    </div>
+    <ul class="nav navbar-nav" role="navigation">
+      <li>
+        <a class="navbar-link">{{user.full_name || user.username}}</a>
+      </li>
+    </ul>
+  </kbn-top-nav>
+
+  <div class="account-settings">
+    <h4>账户设置</h4>
+
+    <form class="form-horizontal" name="form" novalidate>
+      <div class="form-group">
+        <label class="col-md-2 control-label">用户名</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" id="username" name="username" readonly tooltip="Username cannot be edited at this time." ng-model="user.username" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">邮件</label>
+        <div class="col-md-4">
+          <input type="email" class="form-control" id="email" name="email" readonly tooltip="Email cannot be edited at this time." ng-model="user.email" />
+        </div>
+      </div>
+
+      <div class="form-group" ng-show="!view.changePasswordMode">
+        <label class="col-md-2 control-label">口令</label>
+        <div class="col-md-4">
+          <button type="button" class="btn btn-success help-block" ng-click="toggleChangePasswordMode()">更改口令</button>
+        </div>
+      </div>
+
+      <div class="form-group" ng-show="view.changePasswordMode">
+        <label for="password" class="col-md-2 control-label">口令</label>
+        <div class="col-md-4">
+          <input type="password" class="form-control help-block" id="password" name="password"
+                 ng-model="user.password" required placeholder="输入当前口令..." minlength="6" />
+          <input type="password" class="form-control help-block" id="newPassword" name="newPassword"
+                 ng-model="user.newPassword" required placeholder="输入新口令..." minlength="6" />
+          <input type="password" class="form-control help-block" id="confirmPassword" name="confirmPassword"
+                 ng-model="view.confirmPassword" required placeholder="再次输入新口令..." minlength="6" />
+          <div class="has-error">
+            <span class="help-block" ng-show="form.newPassword.$touched && form.newPassword.$error.minlength">
+              口令长度至少6位.
+            </span>
+            <span class="help-block" ng-show="form.confirmPassword.$touched && user.newPassword != view.confirmPassword">
+              两次输入的新口令不一致.
+            </span>
+            <span class="help-block" ng-show="view.incorrectPassword">Current password is incorrect.</span>
+          </div>
+          <div class="has-warning" ng-show="user.metadata._reserved && user.username == 'kibana'">
+            <span class="help-block">
+              <i class="fa fa-exclamation-triangle"></i>
+              在改变kibana用户口令后，需要更新kibana.yml ，并重启Kibana.
+            </span>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-success help-block" ng-click="changePassword(user)"
+                    ng-disabled="form.newPassword.$invalid || user.newPassword != view.confirmPassword">保存更改</button>
+            <button type="button" class="btn btn-default help-block" ng-click="toggleChangePasswordMode()">取消更改</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+@import "~ui/styles/variables/colors.less";
+@import "~ui/styles/variables/bootstrap-mods.less";
+@import "~ui/styles/variables/for-theme.less";
+.xpack-breadcrumbs {
+  min-height: 37px;
+  padding: 8px 10px;
+  margin: 0;
+}
+
+.application {
+  background: @kibanaGray2;
+}
+
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .fa {
+  position: absolute;
+  padding: 12px;
+  pointer-events: none;
+  color: @gray2;
+}
+
+.left-addon .fa  { left:  0;}
+.right-addon .fa { right: 0;}
+
+.left-addon input, .right-addon input {
+  padding-left: 35px !important;
+}
+
+.container {
+  width: 620px;
+  height: 185px;
+  margin: auto;
+  padding: 0;
+  text-align: center;
+  background: @app-links-wrapper-background;
+  box-shadow: 0 0 2em @gray4;
+
+  &.error {
+    box-shadow: 0 0 2em @kibanaRed1;
+  }
+
+  > div {
+    float: left;
+  }
+
+  .logo-container {
+    width: 150px;
+    height: 100%;
+    padding: 20px;
+    background-color: @kibanaPink1;
+    box-shadow: inset -10px 0 20px -10px rgba(0, 0, 0, 0.5);
+
+    .logo {
+      height: 100%;
+      width: 100%;
+      background-image: url("~ui/images/kibana.svg");
+      background-repeat: no-repeat;
+      background-size: 390px 150px;
+    }
+  }
+
+  .login-form {
+    padding: 1.5em 7em;
+    width: 470px;
+    position: relative;
+
+    .form-group.error-message {
+      position: absolute;
+      left: 380px;
+      text-align: left;
+      color: white;
+    }
+  }
+
+  .warning-container {
+    background-color: #e00;
+    color: #fff;
+    padding: 20px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .info-container {
+    background-color: @brand-info;
+    color: #fff;
+    padding: 20px;
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+button.login {
+  background-color: @gray2;
+  color: white;
+  font-size: 1.25em;
+  border: none;
+
+  &:focus, &:hover {
+    background-color: @black;
+  }
+}
+
+input.form-control {
+  border: none;
+  font-size: 1.125em;
+  height: auto;
+  padding: 0.5em;
+}
