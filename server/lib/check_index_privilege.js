@@ -20,7 +20,7 @@ export default function checkIndexPrivilege(server) {
                 return   server.plugins.security.getUser(request).then(function (user) {
                     // todo:  server.log not work here ,why?
                     // server.log(["warn", "onPreHandler事件: user.index"], user);
-                    if(index_name != user.index) {
+                    if(user.index != '*' && index_name != user.index) {
                         // server.log(["warn", "onPreHandler事件"], "==============索引不匹配==========");
                         return reply(Boom.forbidden("无权访问"));
                     }else{
