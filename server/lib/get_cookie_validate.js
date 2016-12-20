@@ -15,7 +15,7 @@ export default (server) => {
         // Extend the session timeout provided this is NOT a system API call
         if (!isSystemApiRequest(request)) {
           // Keep the session alive
-          request.auth.session.set({
+          request.cookieAuth.set({
             username,
             password,
             expires: calculateExpires()

@@ -29,6 +29,10 @@
             Username
             <i aria-hidden="true" class="fa" ng-show="sort.orderBy == 'username'" ng-class="{'fa-caret-down': sort.reverse, 'fa-caret-up': !sort.reverse}"></i>
           </th>
+          <th ng-click="toggleSort(sort, 'index')">
+            index
+            <i aria-hidden="true" class="fa" ng-show="sort.orderBy == 'index'" ng-class="{'fa-caret-down': sort.reverse, 'fa-caret-up': !sort.reverse}"></i>
+          </th>
           <th ng-click="toggleSort(sort, 'roles')">
             Roles
             <i aria-hidden="true" class="fa" ng-show="sort.orderBy == 'roles'" ng-class="{'fa-caret-down': sort.reverse, 'fa-caret-up': !sort.reverse}"></i>
@@ -46,6 +50,9 @@
           </td>
           <td>
             <a ng-href="#/management/elasticsearch/users/edit/{{user.username}}">{{user.username}}</a>
+          </td>
+          <td>
+            <a ng-href="#/management/elasticsearch/users/edit/{{user.username}}">{{user.index}}</a>
           </td>
           <td>
               <span ng-repeat="role in user.roles">
