@@ -1,13 +1,15 @@
 <div class="app-container">
   <kbn-top-nav class="navbar navbar-default navbar-static-top" name="account-nav">
-    <div>
-      <ul class="xpack-breadcrumbs" role="breadcrumbs"></ul>
+    <!-- Transcluded elements. -->
+    <div data-transclude-slots>
+      <!-- Title. -->
+      <div
+              data-transclude-slot="topLeftCorner"
+              class="localTitle"
+      >
+        {{user.full_name || user.username}}
+      </div>
     </div>
-    <ul class="nav navbar-nav" role="navigation">
-      <li>
-        <a class="navbar-link">{{user.full_name || user.username}}</a>
-      </li>
-    </ul>
   </kbn-top-nav>
 
   <div class="account-settings">

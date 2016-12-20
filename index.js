@@ -1,12 +1,12 @@
 import exampleRoute from './server/routes/example';
-
 import hapiAuthBasic from 'hapi-auth-basic';
 import hapiAuthCookie from 'hapi-auth-cookie';
 import {resolve} from 'path';
 import Promise from 'bluebird';
 import getBasicValidate from './server/lib/get_basic_validate';
 import getCookieValidate from './server/lib/get_cookie_validate';
-import createExpose from './server/lib/create_expose';
+import getUserProvider from './server/lib/get_user';
+import isAuthenticatedProvider from './server/lib/is_authenticated';
 import initAuthenticateApi from './server/routes/api/v1/authenticate';
 import initUsersApi from './server/routes/api/v1/users';
 import initRolesApi from './server/routes/api/v1/roles';
@@ -16,6 +16,9 @@ import initLogoutView from './server/routes/views/logout';
 import validateConfig from './server/lib/validate_config';
 import setElasticsearchAuth from './server/lib/set_elasticsearch_auth';
 import createScheme from './server/lib/login_scheme';
+import checkIndexPrivilege from './server/lib/check_index_privilege';
+import userSchema from './server/lib/user_schema';
+
 // import checkLicense from './server/lib/check_license';
 // import mirrorPluginStatus from '../../server/lib/mirror_plugin_status';
 
@@ -25,6 +28,17 @@ export default function (kibana) {
         // configPrefix: 'xpack.security',
         // publicDir: resolve(__dirname, 'public'),
         require: ['kibana', 'elasticsearch'],
+
+        config(Joi) {
+            return Joi.object({
+                enabled: Joi.boolean().default(true),
+                cookieName: Joi.string().default('sid'),
+                encryptionKey: Joi.string(),
+                sessionTimeout: Joi.number().allow(null).default(null),
+                secureCookies: Joi.boolean().default(false),
+                users: Joi.array().items(Joi.object(userSchema)),
+            }).default();
+        },
 
         uiExports: {
             chromeNavControls: ['plugins/security/views/nav_control'],
@@ -76,15 +90,7 @@ export default function (kibana) {
             }
         },
 
-        config(Joi) {
-            return Joi.object({
-                enabled: Joi.boolean().default(true),
-                cookieName: Joi.string().default('sid'),
-                encryptionKey: Joi.string(),
-                sessionTimeout: Joi.number().allow(null).default(null),
-                secureCookies: Joi.boolean().default(false)
-            }).default();
-        },
+
         preInit(server) {
             setElasticsearchAuth(server.config());
         },
@@ -136,7 +142,10 @@ export default function (kibana) {
                     });
                 });
 
-            createExpose(server);
+            getUserProvider(server);
+            isAuthenticatedProvider(server);
+
+            // createExpose(server);
 
             initAuthenticateApi(server);
             initUsersApi(server);
@@ -144,6 +153,9 @@ export default function (kibana) {
             initIndicesApi(server);
             initLoginView(server, thisPlugin);
             initLogoutView(server, thisPlugin);
+
+            checkIndexPrivilege(server, server.config());
+
         }
 
 

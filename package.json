@@ -1,10 +1,10 @@
 {
   "name": "security",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "a test dev plugin",
   "main": "index.js",
   "kibana": {
-    "version": "5.0.1"
+    "version": "5.1.1"
   },
   "scripts": {
     "lint": "eslint",
@@ -18,14 +18,14 @@
     "angular-resource": "^1.4.9",
     "angular-ui-grid": "^3.2.9",
     "bluebird": "^3.1.1",
-    "hapi-auth-basic": "^3.0.0",
-    "hapi-auth-cookie": "^3.1.0",
+    "hapi-auth-basic": "4.2.0",
+    "hapi-auth-cookie": "6.1.1",
     "lodash": "^3.10.1",
     "ui-select": "^0.19.4"
   },
   "devDependencies": {
     "@elastic/eslint-config-kibana": "0.0.2",
-    "@elastic/plugin-helpers": "5.0.1",
+    "@elastic/plugin-helpers": "5.1.0",
     "babel-eslint": "4.1.8",
     "chai": "^3.5.0",
     "eslint": "1.10.3",

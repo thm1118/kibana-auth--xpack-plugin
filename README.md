@@ -1,10 +1,19 @@
 # kibana-auth--xpack-plugin
 
-Simplistic Authentication & Login generic plugin for Kibana 5.0.1
+Simplistic Authentication & Login generic plugin for Kibana 5.1.1.
+
 extract security plugin  from x-pack for learning kibana develop, Please use Elastics's x-Pack for a supported product.
 
-username and password is hard code in server javascript now.
-username: kibana, password:changeme
+username and password are configed in kibana.yml . user only access configed index name.
+
+    security:
+      encryptionKey: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+      cookieName: 'mycookie'
+      users: [{'username':'kibana', 'password':'changeme','full_name':'内置管理员', 'index':'logstash-*','metadata':{'_reserved':true}},{'username':'log2', 'password':'changeme','index':'log2-*','metadata':{'_reserved':true}}]
+
+username: kibana, password:changeme ,log2/changeme.
+
+"kibana" user hard code as administrator
 
 ![preview](img/login.png)
 

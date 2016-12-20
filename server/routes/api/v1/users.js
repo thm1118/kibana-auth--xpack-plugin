@@ -15,6 +15,8 @@ export default (server) => {
   const isValidUser = getIsValidUser(server);
   const routePreCheckLicenseFn = routePreCheckLicense(server);
 
+  let users = server.config().get('security.users');
+  _.omit(users, ['password']);
   server.route({
     method: 'GET',
     path: '/api/security/v1/users',
@@ -23,9 +25,15 @@ export default (server) => {
       //   (response) => reply(_.values(response)),
       //   _.flow(wrapError, reply)
       // );
-        //todo: 根据客户端js ，模拟这个对象，还需要处理异常
-        response = [{"username": "kibana", "roles":"admin?","full_name": "", "email":"","metadata":"", "enabled":true}];
-        reply(_.values(response))
+        // response = [{"username": "kibana", "roles":"admin?","full_name": "", "email":"","metadata":"", "enabled":true}];
+        // reply(_.values(server.config().get('users')));
+        return   server.plugins.security.getUser(request).then(function (user) {
+            if('kibana' != user.username) {
+                return reply(Boom.forbidden("无权访问"));
+            }else{
+                reply(users);
+            }
+        }, _.flow(wrapError, reply));
     },
     // config: {
     //   pre: [routePreCheckLicenseFn]
@@ -43,8 +51,12 @@ export default (server) => {
       //     return reply(Boom.notFound());
       //   },
       //   _.flow(wrapError, reply));
-        //todo: 不写死
-        return reply(username);
+        let user = _.find(users, { 'username': username});
+        if(user != undefined){
+            return reply(user);
+        }else{
+            return reply(Boom.notFound());
+        }
     },
     // config: {
     //   pre: [routePreCheckLicenseFn]
@@ -61,7 +73,8 @@ export default (server) => {
       //   () => reply(request.payload),
       //   _.flow(wrapError, reply));
         /** todo：这应该是新增或修改用户信息，*/
-        return reply({"username": "kibana", "roles":"admin?","full_name": "", "email":"","metadata":"", "enabled":true})
+        // return reply({"username": "kibana", "roles":"admin?","full_name": "", "email":"","metadata":"", "enabled":true})
+        return reply(Boom.forbidden("无权修改"));
     },
     config: {
       validate: {
@@ -80,7 +93,8 @@ export default (server) => {
       //   () => reply().code(204),
       //   _.flow(wrapError, reply));
         /** todo:我们不应该 删除用户？*/
-        reply().code(204);
+        // reply().code(204);
+        return reply(Boom.forbidden("无权删除"));
     },
     // config: {
     //   pre: [routePreCheckLicenseFn]
@@ -105,7 +119,8 @@ export default (server) => {
       // })
       // .catch((error) => reply(Boom.unauthorized(error)));
       /** todo: 这样仅仅是session中修改密码，是否允许？*/
-        onChangePassword(request, username, newPassword, calculateExpires, reply);
+        return reply(Boom.forbidden("无权修改"));
+      onChangePassword(request, username, newPassword, calculateExpires, reply);
     },
     config: {
       validate: {

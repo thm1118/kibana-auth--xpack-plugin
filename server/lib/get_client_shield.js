@@ -1,5 +1,5 @@
 import {once} from 'lodash';
-import elasticsearchShield from './elasticsearch-shield-js/elasticsearch-shield';
+// import elasticsearchShield from './elasticsearch-shield-js/elasticsearch-shield';
 
 export default once((server) => {
   const createClient = server.plugins.elasticsearch.createClient;
