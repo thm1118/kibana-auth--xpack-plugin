@@ -4,6 +4,9 @@ Simplistic Authentication & Login generic plugin for Kibana 5.1.1.
 
 extract security plugin  from x-pack for learning kibana develop, Please use Elastics's x-Pack for a supported product.
 
+
+## install 
+
 username and password are configed in kibana.yml . user only access configed index name. index name suport wildcard character *
 
     security:
@@ -14,6 +17,8 @@ username and password are configed in kibana.yml . user only access configed ind
 username: kibana, password:changeme ,log2/changeme.
 
 "kibana" user hard code as administrator
+
+after config kibana.yml , run `kibana-plugin install  https://github.com/thm1118/kibana-auth--xpack-plugin/releases/download/5.1.1/security-0.0.3.zip` to install .
 
 ![preview](img/login.png)
 
