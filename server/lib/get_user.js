@@ -14,11 +14,12 @@ export default function getUserProvider(server) {
     //   return Promise.resolve(null);
     // }
     // return callWithRequest(request, 'shield.authenticate');
-
+      server.log(["warn", "getUser"], "开始读取request头");
       let { username, password } =  parseHeader(request.headers["authorization"]);
-
+      server.log(["warn", "getUser"], "结束读取request头"+username+password);
       let user = _.find(users, { 'username': username, 'password': password });
       if(user != undefined){
+          user = _.omit(user, 'password');
           return Promise.resolve(user);
       }else{
           throw new Error('用户名或口令错误！请重新登陆');

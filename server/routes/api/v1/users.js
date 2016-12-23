@@ -1,22 +1,25 @@
 import _ from 'lodash';
 import Boom from 'boom';
 import Joi from 'joi';
-import getClient from '../../../lib/get_client_shield';
+// import getClient from '../../../lib/get_client_shield';
 import userSchema from '../../../lib/user_schema';
 import { wrapError } from '../../../lib/errors';
 import getCalculateExpires from '../../../lib/get_calculate_expires';
 import onChangePassword from '../../../lib/on_change_password';
 import getIsValidUser from '../../../lib/get_is_valid_user';
-import routePreCheckLicense from '../../../lib/route_pre_check_license';
+// import routePreCheckLicense from '../../../lib/route_pre_check_license';
 
 export default (server) => {
-  const callWithRequest = getClient(server).callWithRequest;
+  // const callWithRequest = getClient(server).callWithRequest;
   const calculateExpires = getCalculateExpires(server);
   const isValidUser = getIsValidUser(server);
-  const routePreCheckLicenseFn = routePreCheckLicense(server);
+  // const routePreCheckLicenseFn = routePreCheckLicense(server);
 
   let users = server.config().get('security.users');
-  _.omit(users, ['password']);
+    users = _.map(users, (user)=>{
+        return _.omit(user, ['password']);
+        });
+    server.log(["info", "userlist--remove password"],users);
   server.route({
     method: 'GET',
     path: '/api/security/v1/users',

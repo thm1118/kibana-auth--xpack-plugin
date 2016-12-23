@@ -21,4 +21,11 @@ export default (config, log) => {
   } else {
     config.set('security.secureCookies', true);
   }
+
+    if (config.get('security.users') == null) {
+        throw new Error('需要在 kibana.yml 内配置，设置security.users');
+    }else{
+        log('检测到 已在kibana.yml 内配置了security.users');
+    }
+
 };

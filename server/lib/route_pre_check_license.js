@@ -1,7 +1,7 @@
 const Boom = require('boom');
 
 export default function routePreCheckLicense(server) {
-  const xpackMainPlugin = server.plugins.xpack_main;
+  // const xpackMainPlugin = server.plugins.xpack_main;
   const pluginId = 'security';
   return function forbidApiAccess(request, reply) {
     // const licenseCheckResults = xpackMainPlugin.info.feature(pluginId).getLicenseCheckResults();

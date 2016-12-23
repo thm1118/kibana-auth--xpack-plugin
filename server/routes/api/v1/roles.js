@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import Boom from 'boom';
-import getClient from '../../../lib/get_client_shield';
+// import getClient from '../../../lib/get_client_shield';
 import roleSchema from '../../../lib/role_schema';
 import { wrapError } from '../../../lib/errors';
-import routePreCheckLicense from '../../../lib/route_pre_check_license';
+// import routePreCheckLicense from '../../../lib/route_pre_check_license';
 
 export default (server) => {
-  const callWithRequest = getClient(server).callWithRequest;
-  const routePreCheckLicenseFn = routePreCheckLicense(server);
+  // const callWithRequest = getClient(server).callWithRequest;
+  // const routePreCheckLicenseFn = routePreCheckLicense(server);
 
   server.route({
     method: 'GET',

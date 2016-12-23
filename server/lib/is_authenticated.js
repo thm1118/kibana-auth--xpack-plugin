@@ -9,6 +9,7 @@ export default function isAuthenticatedProvider(server) {
         // don't swallow server errors
         throw err;
       }
+      server.log(["err","有未捕获错误"], err);
     }
 
     return false;
