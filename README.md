@@ -18,7 +18,7 @@ username: kibana, password:changeme ,log2/changeme.
 
 "kibana" user hard code as administrator
 
-after config kibana.yml , run `kibana-plugin install  https://github.com/thm1118/kibana-auth--xpack-plugin/releases/download/5.1.1/security-0.0.3.zip` to install .
+after config kibana.yml , run `kibana-plugin install  https://github.com/thm1118/kibana-auth--xpack-plugin/releases/download/5.1.1/security-0.0.4.zip` to install .
 
 ![preview](img/login.png)
 
