@@ -11,9 +11,10 @@ export default function checkIndexPrivilege(server) {
         let conifgIndex = config_index;
         let queryIndex = query_index;
         if(config_index !== null && config_index.length >=2 && query_index.length >=2 && config_index[config_index.length -1] === '*'){
-            conifgIndex = config_index.substr(0, config_index.length - 2);
-            queryIndex = query_index.substr(0, query_index.length - 2);
+            conifgIndex = config_index.substr(0, config_index.length - 1);
+            queryIndex = query_index.substr(0, conifgIndex.length);
         }
+        server.log(["info","配置索引和当前使用索引"], conifgIndex + "," +queryIndex);
         return conifgIndex === queryIndex;
     };
     server.ext({
